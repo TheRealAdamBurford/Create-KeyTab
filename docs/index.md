@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-site-verification" content="QtiCpHJXx6ze17AIVUJso8v0cXoF4LGjsCkYLR6ByIk" />
-<meta name="keywords" content="PowerShell,KeyTab,Key Tab">
+<meta name="keywords" content="PowerShell,KeyTab,Key Tab,generate,active directory,creation,automate,batch,kerberos">
 </head>
 <body>
 <a href="https://github.com/TheRealAdamBurford/Create-KeyTab">Create KeyTab Project</a> 
