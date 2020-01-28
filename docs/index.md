@@ -10,6 +10,8 @@
 <h2 id="Create-Keytab-ps1">Create A KeyTab File Using PowerShell</h2>
 This scipt will generate off-line keytab files for use with Active Directory (AD). While the script is designed to work independently of AD, this script can be used with a wrapper script that uses Get-ADUser or Get-ADObject to retrieve the UPN of a samaccountname or a list of samaccountnames for use in batch processing  of KeyTab creation.
 
+<p>The script is an alternative to ktpass. It offers the benefit of running on any server or workstation with PowerShell. The script allows the delegation of KeyTab file creation to individuals who are not domain admins. As long as the account has a UPN and the user/group creating KeyTab files are able to read the UPN and have knowledge of the password they can successfully create a working KeyTab file.</p>
+
 <h3 id="Requirements">Requirements</h3>
 
 <div>
