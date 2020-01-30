@@ -12,6 +12,8 @@
 
 <p>The script is an alternative to ktpass. It offers the benefit of running on any server or workstation with PowerShell. The script allows the delegation of KeyTab file creation to individuals who are not domain admins. As long as the account has a UPN and the user/group creating KeyTab files are able to read the UPN and have knowledge of the password they can successfully create a working KeyTab file.</p>
 
+<p>Note: The SALT for AES must be at least 8 bytes. If the upn@domain.com (upnDOMAIN.COM) is less than 8 characters without the @, you will be restricted to RC4 with this script or increase the length of the principal.</p>
+
 <h3 id="Requirements">Requirements</h3>
 
 <div>
