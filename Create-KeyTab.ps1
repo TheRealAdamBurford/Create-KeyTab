@@ -1,9 +1,30 @@
-﻿##########################################################
+<#PSScriptInfo
+.VERSION 1.0.0
+.GUID 325f7f9a-87be-42ec-ba96-c5e423718284
+.AUTHOR TRAB
+.COMPANYNAME
+.COPYRIGHT
+.TAGS KeyTab Ktpass Key Tab
+.LICENSEURI https://github.com/TheRealAdamBurford/Create-KeyTab/blob/master/LICENSE
+.PROJECTURI https://github.com/TheRealAdamBurford/Create-KeyTab
+.ICONURI
+.EXTERNALMODULEDEPENDENCIES 
+.REQUIREDSCRIPTS
+.EXTERNALSCRIPTDEPENDENCIES
+.RELEASENOTES
+.PRIVATEDATA
+#>
+
+<# 
+.DESCRIPTION 
+ This scipt will generate off-line keytab files for use with Active Directory (AD). While the script is designed to work independently of AD, this script can be used with a wrapper script that uses Get-ADUser or Get-ADObject to retrieve the UPN of a samaccountname or a list of samaccountnames for use in batch processing of KeyTab creation. More information at https://therealadamburford.github.io/Create-KeyTab/ 
+#> 
+##########################################################
 ###
 ###      Create-KeyTab.ps1
 ###
 ###      Created : 2019-10-26
-###      Modified: 2020-01-24
+###      Modified: 2020-01-30
 ###
 ###      Created By : Adam Burford
 ###      Modified By: Adam Burford
@@ -23,6 +44,7 @@
 ### 2019-11-18 - Changed output text. RC4,AES128,AES256
 ### 2019-11-18 - Created static nFold output.
 ### 2019-11-26 - Added a Get-Password function to mask password prompt input
+### 2020-01-30 - Add Info for posting to https://www.powershellgallery.com
 ###
 ##########################################################
 ### Attribution:
@@ -68,12 +90,11 @@ Optional Parameters
 .\Create-KeyTab.ps1 -Realm "MY.REALM.COM" -Principal "principalname" -Password "Secret" -File "c:\temp\login.keytab"
 
 .NOTES
-When appending a keytab, be sure the file exists.
+Use -QUIET and -NOPROMPT for batch mode processing.
 
 .LINK
 https://www.linkedin.com/in/adamburford
 #>
-
 param (
 [Parameter(Mandatory=$true,HelpMessage="REALM name will be forced to Upper Case")]$Realm,
 [Parameter(Mandatory=$true,HelpMessage="Principal is case sensative. It must match the principal portion of the UPN",ValueFromPipelineByPropertyName=$true)]$Principal,
@@ -681,3 +702,5 @@ $fileBytes += $keyTabVersion
 $fileBytes += $keyTabEntries
 [System.IO.File]::WriteAllBytes($File,$fileBytes)
 }
+
+
