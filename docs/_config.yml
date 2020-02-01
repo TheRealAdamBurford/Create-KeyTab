@@ -1,5 +1,6 @@
 theme: jekyll-theme-slate
 google_verify: QtiCpHJXx6ze17AIVUJso8v0cXoF4LGjsCkYLR6ByIk
+bing_site_verification: 976CEC2B855BC82AA2D394F7DE5B5A1D
 
 navbar-links:
   Resources:
@@ -11,4 +12,5 @@ linkedin: adamburford
 email: "adam@adamburford.com"
 
 share-links-active:
-linkedin: true
+author:
+linkedin: "https://www.linkedin.com/in/adamburford/"
