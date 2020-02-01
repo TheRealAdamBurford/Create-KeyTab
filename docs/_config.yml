@@ -7,10 +7,8 @@ navbar-links:
     - MS-KILE 3.1.1.2 Cryptographic Material: "https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-kile/7a7b081d-c0c6-46f4-acbf-a439664270b8"
   Author's home: "http://www.adamburford.com"
 
-social-network-links:
-linkedin: adamburford
-email: "adam@adamburford.com"
-
 share-links-active:
 author:
-linkedin: "https://www.linkedin.com/in/adamburford/"
+email: "adam@adamburford.com"
+social:
+linkedin: "adamburford"
