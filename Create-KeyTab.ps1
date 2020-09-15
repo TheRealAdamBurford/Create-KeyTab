@@ -528,7 +528,7 @@ $vno = @(00)
 [byte[]]$numComponents = Get-BytesBigEndian -BitSize 16 -Value $components.Count
 
 ### To Set TimeStamp To Jan 1, 1970 - [byte[]]$timeStamp = @(0,0,0,0)
-[byte[]]$timeStamp = Get-BytesBigEndian -BitSize 32 -Value ([int]([Math]::Truncate((Get-Date(Get-Date).ToUniversalTime() -UFormat %s))))
+[byte[]]$timeStamp = Get-BytesBigEndian -BitSize 32 -Value ([int]([Math]::Truncate([decimal]::Parse((Get-Date(Get-Date).ToUniversalTime() -UFormat %s)))))
 
 ### Data size information for KeyEntry
 # num_components bytes   = 2
