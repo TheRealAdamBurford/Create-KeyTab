@@ -24,7 +24,7 @@
 ###      Create-KeyTab.ps1
 ###
 ###      Created : 2019-10-26
-###      Modified: 2020-01-30
+###      Modified: 2020-09-15
 ###
 ###      Created By : Adam Burford
 ###      Modified By: Adam Burford
@@ -45,6 +45,7 @@
 ### 2019-11-18 - Created static nFold output.
 ### 2019-11-26 - Added a Get-Password function to mask password prompt input
 ### 2020-01-30 - Add Info for posting to https://www.powershellgallery.com
+### 2020-09-15 - Added suggested use of [decimal]::Parse from "https://github.com/matherm-aboehm" to fix timestamp error on localized versions of Windows. Line 535.
 ###
 ##########################################################
 ### Attribution:
@@ -528,7 +529,10 @@ $vno = @(00)
 [byte[]]$numComponents = Get-BytesBigEndian -BitSize 16 -Value $components.Count
 
 ### To Set TimeStamp To Jan 1, 1970 - [byte[]]$timeStamp = @(0,0,0,0)
-[byte[]]$timeStamp = Get-BytesBigEndian -BitSize 32 -Value ([int]([Math]::Truncate((Get-Date(Get-Date).ToUniversalTime() -UFormat %s))))
+### [byte[]]$timeStamp = Get-BytesBigEndian -BitSize 32 -Value ([int]([Math]::Truncate((Get-Date(Get-Date).ToUniversalTime() -UFormat %s))))
+### 15 September 2020 Updated
+### https://github.com/matherm-aboehm suggested use of [decimal]::Parse to fix timestamp error on localized versions of Windows.
+[byte[]]$timeStamp = Get-BytesBigEndian -BitSize 32 -Value ([int]([Math]::Truncate([decimal]::Parse((Get-Date(Get-Date).ToUniversalTime() -UFormat %s)))))
 
 ### Data size information for KeyEntry
 # num_components bytes   = 2
@@ -702,5 +706,3 @@ $fileBytes += $keyTabVersion
 $fileBytes += $keyTabEntries
 [System.IO.File]::WriteAllBytes($File,$fileBytes)
 }
-
-
