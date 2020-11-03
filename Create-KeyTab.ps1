@@ -1,5 +1,5 @@
 <#PSScriptInfo
-.VERSION 1.0.1
+.VERSION 1.0.2
 .GUID 325f7f9a-87be-42ec-ba96-c5e423718284
 .AUTHOR TRAB
 .COMPANYNAME
@@ -24,7 +24,7 @@
 ###      Create-KeyTab.ps1
 ###
 ###      Created : 2019-10-26
-###      Modified: 2020-09-15
+###      Modified: 2020-10-26
 ###
 ###      Created By : Adam Burford
 ###      Modified By: Adam Burford
@@ -46,6 +46,7 @@
 ### 2019-11-26 - Added a Get-Password function to mask password prompt input
 ### 2020-01-30 - Add Info for posting to https://www.powershellgallery.com
 ### 2020-09-15 - Added suggested use of [decimal]::Parse from "https://github.com/matherm-aboehm" to fix timestamp error on localized versions of Windows. Line 535.
+### 2020-10-26 - Add KRB5_NT_SRV_HST to possible PType values
 ###
 ##########################################################
 ### Attribution:
@@ -103,7 +104,7 @@ param (
 [Parameter(Mandatory=$false)]$SALT,
 [Parameter(Mandatory=$false)]$File,
 [Parameter(Mandatory=$false,ValueFromPipelineByPropertyName=$true)]$KVNO=1,
-[Parameter(Mandatory=$false)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_UID")][String[]]$PType="KRB5_NT_PRINCIPAL",
+[Parameter(Mandatory=$false)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_SRV_HST", "KRB5_NT_UID")][String[]]$PType="KRB5_NT_PRINCIPAL",
 [Parameter(Mandatory=$false)][Switch]$RC4,
 [Parameter(Mandatory=$false)][Switch]$AES128,
 [Parameter(Mandatory=$false)][Switch]$AES256,
@@ -447,7 +448,7 @@ return $bytes
 
 function Get-PrincipalType {
 param (
-[Parameter(Mandatory=$true)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_UID")][String[]]$PrincipalType
+[Parameter(Mandatory=$true)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_SRV_HST", "KRB5_NT_UID")][String[]]$PrincipalType
 )
 
 [byte[]] $nameType = @()
@@ -455,6 +456,7 @@ param (
 switch($PrincipalType){
 "KRB5_NT_PRINCIPAL"{$nameType = @(00,00,00,01);break}
 "KRB5_NT_SRV_INST"{$nameType = @(00,00,00,02);break}
+"KRB5_NT_SRV_HST"{$nameType = @(00,00,00,03);break}
 "KRB5_NT_UID"{$nameType = @(00,00,00,05);break}
 default{$nameType = @(00,00,00,01);break}
 }
@@ -469,7 +471,7 @@ param (
 [Parameter(Mandatory=$true)]$Components,
 [Parameter(Mandatory=$false)]$SALT="",
 [Parameter(Mandatory=$false)]$KVNO=1,
-[Parameter(Mandatory=$true)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_UID")][String[]]$PrincipalType,
+[Parameter(Mandatory=$true)][ValidateSet("KRB5_NT_PRINCIPAL", "KRB5_NT_SRV_INST", "KRB5_NT_SRV_HST", "KRB5_NT_UID")][String[]]$PrincipalType,
 [Parameter(Mandatory=$true)][ValidateSet("RC4", "AES128", "AES256")][String[]]$EncryptionKeyType
 )
 
@@ -513,6 +515,7 @@ default{}
 switch($PrincipalType){
 "KRB5_NT_PRINCIPAL"{$nameType = @(00,00,00,01);break}
 "KRB5_NT_SRV_INST"{$nameType = @(00,00,00,02);break}
+"KRB5_NT_SRV_HST"{$nameType = @(00,00,00,03);break}
 "KRB5_NT_UID"{$nameType = @(00,00,00,05);break}
 default{$nameType = @(00,00,00,01);break}
 }
